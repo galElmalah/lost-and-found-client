@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/lost-and-found/static/css/main.ebb43620.chunk.css",
+    "main.js": "/lost-and-found/static/js/main.2c144255.chunk.js",
+    "main.js.map": "/lost-and-found/static/js/main.2c144255.chunk.js.map",
+    "runtime-main.js": "/lost-and-found/static/js/runtime-main.173b932f.js",
+    "runtime-main.js.map": "/lost-and-found/static/js/runtime-main.173b932f.js.map",
+    "static/js/2.8bcb9ea1.chunk.js": "/lost-and-found/static/js/2.8bcb9ea1.chunk.js",
+    "static/js/2.8bcb9ea1.chunk.js.map": "/lost-and-found/static/js/2.8bcb9ea1.chunk.js.map",
+    "index.html": "/lost-and-found/index.html",
+    "precache-manifest.8e98cb3718dbedde3623cfb544357fb0.js": "/lost-and-found/precache-manifest.8e98cb3718dbedde3623cfb544357fb0.js",
+    "service-worker.js": "/lost-and-found/service-worker.js",
+    "static/css/main.ebb43620.chunk.css.map": "/lost-and-found/static/css/main.ebb43620.chunk.css.map",
+    "static/js/2.8bcb9ea1.chunk.js.LICENSE": "/lost-and-found/static/js/2.8bcb9ea1.chunk.js.LICENSE"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.173b932f.js",
+    "static/js/2.8bcb9ea1.chunk.js",
+    "static/css/main.ebb43620.chunk.css",
+    "static/js/main.2c144255.chunk.js"
+  ]
+}
