@@ -8,12 +8,13 @@ const defaultOptions = {
   data: {},
   method: "get",
 };
+const baseUrl =
+  process.env.NODE_ENV === "production"
+    ? `https://school-lost-and-found-app.herokuapp.com`
+    : `localhost:3001`;
 
 const getEndpoint = (endpoint, method, userId) => {
-  const url =
-    process.env.NODE_ENV === "production"
-      ? `https://school-lost-and-found-app.herokuapp.com${endpoint}`
-      : `localhost:3001${endpoint}`;
+  const url = baseUrl + endpoint;
   if (method.toLowerCase() === "get") {
     return `${url}?userId=${userId}`;
   }
