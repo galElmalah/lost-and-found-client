@@ -1,0 +1,42 @@
+.map {
+  height: 100%;
+  z-index: 0;
+}
+
+.dragMarker {
+  background: red;
+}
+
+.leaflet-popup-content{
+  min-width: 300px;
+}
+.popoverContainer {
+  & > * {
+    margin: 0 !important;
+    min-width: 300px;
+    
+  }
+  .descriptionItem {
+    font-style: italic;
+    font-size: 16px;
+    font-weight: 1000;
+    margin: 20px 20px 20px 0 !important;
+  }
+  .informationItem{
+    font-size: 16px;
+    border-top: 1px solid rgb(231, 224, 224);
+    padding: 4px;
+    padding-top: 6px;
+    width: 100%;
+    span{
+      display: inline-block;
+      font-weight: bold;
+      width:30%;
+    }
+  }
+  .colorItem{
+    display: inline-block;
+    width:70%;
+    height: 17px !important;
+  }  
+}
