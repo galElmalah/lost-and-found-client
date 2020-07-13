@@ -63,13 +63,15 @@ export const FilterList = React.memo(
     React.useEffect(() => {
       if (
         filterState.toggels &&
-        Object.keys(filterState.toggels) > Object.keys(toggels)
+        Object.values(filterState.toggels).filter(Boolean).length >
+          Object.values(toggels).filter(Boolean).length
       ) {
         decBadgeCount("filter");
       }
       if (
         filterState.toggels &&
-        Object.keys(filterState.toggels) < Object.keys(toggels)
+        Object.values(filterState.toggels).filter(Boolean).length <
+          Object.values(toggels).filter(Boolean).length
       ) {
         incBadgeCount("filter");
       }
