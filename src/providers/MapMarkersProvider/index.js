@@ -19,14 +19,9 @@ export const MarkersProvider = ({ children }) => {
   useEffect(() => {
     const id = setInterval(() => {
       getMarkers().then(({ data: cureentMakrers }) => {
-        const newMarkers = cureentMakrers.filter((m) => {
-          return !markers.some((marker) => marker._id === m._id);
-        });
-        if (newMarkers.length) {
-          setMarkers((p) => [...p, ...newMarkers]);
-        }
+        setMarkers(cureentMakrers);
       });
-    }, 7000);
+    }, 5000);
     return () => clearInterval(id);
   }, [markers]);
 

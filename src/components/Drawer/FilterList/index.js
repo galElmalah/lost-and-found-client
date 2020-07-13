@@ -53,7 +53,9 @@ export const FilterList = React.memo(
       filterState,
       setFilterState,
     } = React.useContext(DrawerContext);
-    const { userDetails, labels } = React.useContext(UserDetailsContext);
+    const { userDetails, labels, setQueryParams } = React.useContext(
+      UserDetailsContext
+    );
     const { setMarkers } = React.useContext(MarkersContext);
     const [toggels, setToggels] = React.useState(filterState.toggels || {});
     const [activeLabels, setActiveLabels] = React.useState(
@@ -121,6 +123,9 @@ export const FilterList = React.memo(
       const labelsQuery = activeLabels.length
         ? `labels=${activeLabels.join(",")}`
         : "";
+      setQueryParams(
+        `?range=${range}&${toggelsQuery}${labelsQuery ? `&${labelsQuery}` : ""}`
+      );
 
       return `?range=${range}&${toggelsQuery}${
         labelsQuery ? `&${labelsQuery}` : ""

@@ -13,10 +13,11 @@ const baseUrl =
     ? `https://school-lost-and-found-app.herokuapp.com`
     : `http://localhost:3001`;
 
-const getEndpoint = (endpoint, method, userId) => {
+const getEndpoint = (endpoint, method, userId, queryParams = []) => {
+  const qp = queryParams[0] === "?" ? queryParams.substring(1) : queryParams;
   const url = baseUrl + endpoint;
   if (method.toLowerCase() === "get") {
-    return `${url}?userId=${userId}`;
+    return `${url}?userId=${userId}&${qp}`;
   }
   return url;
 };
@@ -27,7 +28,7 @@ const dataMixer = (optionsData, userDetails = {}) =>
 export const useApi = (endpoint, options = defaultOptions) => {
   const _options = { ...defaultOptions, ...options };
   const { data: optionsData, method, initialData, invokeManually } = _options;
-  const { userDetails } = useContext(UserDetailsContext);
+  const { userDetails, queryParams } = useContext(UserDetailsContext);
   const [isFetching, setIsFetching] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [data, setData] = useState(initialData);
@@ -38,7 +39,12 @@ export const useApi = (endpoint, options = defaultOptions) => {
     (passedData, url) => {
       console.log(url);
       return Axios.request({
-        url: getEndpoint(url || endpoint, method, userDetails.googleId),
+        url: getEndpoint(
+          url || endpoint,
+          method,
+          userDetails.googleId,
+          queryParams
+        ),
         method,
         data: passedData ? dataMixer(passedData, userDetails) : _data,
       });
