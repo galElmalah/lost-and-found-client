@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "4cc443a295ab1d248e3590be9f416ae1",
+    "revision": "ecc30857d28c419e012d7dee5ab41846",
     "url": "/lost-and-found-client/index.html"
   },
   {
-    "revision": "08d2167f97fbcb701f79",
+    "revision": "627dd3ad33352a595294",
     "url": "/lost-and-found-client/static/css/main.f3afd015.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/lost-and-found-client/static/js/2.5bf152cf.chunk.js.LICENSE"
   },
   {
-    "revision": "08d2167f97fbcb701f79",
-    "url": "/lost-and-found-client/static/js/main.df3ff2cb.chunk.js"
+    "revision": "627dd3ad33352a595294",
+    "url": "/lost-and-found-client/static/js/main.d3a0d977.chunk.js"
   },
   {
     "revision": "f108bbfa60e551335663",
