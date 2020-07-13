@@ -60,7 +60,6 @@ export const UserSettingsPanel = ({ showAlert }) => {
   };
 
   const handleEditClick = (id) => () => {
-    console.log(id);
     setActiveId(id);
   };
   const togglePanel = (key) => () => {
@@ -76,9 +75,19 @@ export const UserSettingsPanel = ({ showAlert }) => {
   const handleRadioChange = (e) => {
     setTile(e.target.value);
   };
-  const getUsersMarkers = () =>
-    markers.filter((m) => m.reporter.id === userDetails.googleId);
-  console.log(tileUrl);
+  const getUsersMarkers = () => {
+    const userEntries = markers.filter(
+      (m) => m.reporter.id === userDetails.googleId
+    );
+    const entries = [];
+    userEntries.forEach((entry) => {
+      if (entries.some((e) => e._id === entry._id)) {
+        return;
+      }
+      entries.push(entry);
+    });
+    return entries;
+  };
   return (
     <div>
       <DrawersTitle pageName={"User settings"} />
@@ -139,7 +148,7 @@ export const UserSettingsPanel = ({ showAlert }) => {
           >
             <List component="div" disablePadding>
               {getUsersMarkers().map((m) => (
-                <ListItem button>
+                <ListItem button key={m._id}>
                   <EditItemModal
                     handleClose={() => {
                       setActiveId(null);

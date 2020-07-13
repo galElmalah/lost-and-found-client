@@ -33,9 +33,17 @@ export const UserMatchesList = () => {
   const { userDetails } = useContext(UserDetailsContext);
 
   const getUserMatches = () => {
-    return markers.filter(
-      (m) => m.reporter.id === userDetails.googleId && m.matches.length > 0
+    const userEntries = markers.filter(
+      (m) => m.reporter.id === userDetails.googleId && m.matches.length
     );
+    const entries = [];
+    userEntries.forEach((entry) => {
+      if (entries.some((e) => e._id === entry._id)) {
+        return;
+      }
+      entries.push(entry);
+    });
+    return entries;
   };
 
   const getEntryById = (id) => markers.find((m) => m._id === id);
