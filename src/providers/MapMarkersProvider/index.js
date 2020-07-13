@@ -21,7 +21,7 @@ export const MarkersProvider = ({ children }) => {
       getMarkers().then(({ data: cureentMakrers }) => {
         setMarkers(cureentMakrers);
       });
-    }, 7000);
+    }, 2001);
     return () => clearInterval(id);
   }, [markers]);
 
