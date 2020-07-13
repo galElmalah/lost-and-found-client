@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/lost-and-found-client/static/css/main.f3afd015.chunk.css",
-    "main.js": "/lost-and-found-client/static/js/main.6d05c13c.chunk.js",
-    "main.js.map": "/lost-and-found-client/static/js/main.6d05c13c.chunk.js.map",
+    "main.js": "/lost-and-found-client/static/js/main.602d9cd9.chunk.js",
+    "main.js.map": "/lost-and-found-client/static/js/main.602d9cd9.chunk.js.map",
     "runtime-main.js": "/lost-and-found-client/static/js/runtime-main.1decc047.js",
     "runtime-main.js.map": "/lost-and-found-client/static/js/runtime-main.1decc047.js.map",
-    "static/js/2.7cfa7beb.chunk.js": "/lost-and-found-client/static/js/2.7cfa7beb.chunk.js",
-    "static/js/2.7cfa7beb.chunk.js.map": "/lost-and-found-client/static/js/2.7cfa7beb.chunk.js.map",
+    "static/js/2.5bf152cf.chunk.js": "/lost-and-found-client/static/js/2.5bf152cf.chunk.js",
+    "static/js/2.5bf152cf.chunk.js.map": "/lost-and-found-client/static/js/2.5bf152cf.chunk.js.map",
     "index.html": "/lost-and-found-client/index.html",
-    "precache-manifest.3bc28f7b12e26a8abab62497a648d03c.js": "/lost-and-found-client/precache-manifest.3bc28f7b12e26a8abab62497a648d03c.js",
+    "precache-manifest.3ba2c0781b44edc9bcfaff1f4a3247e7.js": "/lost-and-found-client/precache-manifest.3ba2c0781b44edc9bcfaff1f4a3247e7.js",
     "service-worker.js": "/lost-and-found-client/service-worker.js",
     "static/css/main.f3afd015.chunk.css.map": "/lost-and-found-client/static/css/main.f3afd015.chunk.css.map",
-    "static/js/2.7cfa7beb.chunk.js.LICENSE": "/lost-and-found-client/static/js/2.7cfa7beb.chunk.js.LICENSE"
+    "static/js/2.5bf152cf.chunk.js.LICENSE": "/lost-and-found-client/static/js/2.5bf152cf.chunk.js.LICENSE"
   },
   "entrypoints": [
     "static/js/runtime-main.1decc047.js",
-    "static/js/2.7cfa7beb.chunk.js",
+    "static/js/2.5bf152cf.chunk.js",
     "static/css/main.f3afd015.chunk.css",
-    "static/js/main.6d05c13c.chunk.js"
+    "static/js/main.602d9cd9.chunk.js"
   ]
 }
