@@ -1,25 +1,28 @@
-import React, { useContext, useState, useEffect } from 'react';
-import * as style from './Drawer.module.scss';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import Tooltip from '@material-ui/core/Tooltip';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { MarkersContext } from '../../providers/MapMarkersProvider';
-import { UserDetailsContext } from '../../providers/UserDetailsProvider';
-import { Divider, Chip } from '@material-ui/core';
-import { LostOrFoundLabel, DrawersTitle } from './UserSettings';
+import React, { useContext, useState, useEffect } from "react";
+import * as style from "./Drawer.module.scss";
+import ExpansionPanel from "@material-ui/core/ExpansionPanel";
+import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
+import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import Tooltip from "@material-ui/core/Tooltip";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { MarkersContext } from "../../providers/MapMarkersProvider";
+import { UserDetailsContext } from "../../providers/UserDetailsProvider";
+import { Divider, Chip } from "@material-ui/core";
+import { LostOrFoundLabel, DrawersTitle } from "./UserSettings";
+import { DrawerContext } from ".";
 
 export const AnimatedItem = ({ pos, children }) => {
   const [shouldAnimate, setShouldAnimate] = useState(false);
+  const { setBadgeCounts } = useContext(DrawerContext);
   useEffect(() => {
     const animationId = setTimeout(() => setShouldAnimate(true), pos * 200);
+    setBadgeCounts((p) => ({ ...p, matches: 0 }));
     return () => clearTimeout(animationId);
   }, []);
   return (
-    <div className={`${style.defualt} ${shouldAnimate ? style.animate : ''}`}>
+    <div className={`${style.defualt} ${shouldAnimate ? style.animate : ""}`}>
       {children}
     </div>
   );
@@ -41,7 +44,7 @@ export const UserMatchesList = () => {
     return (
       <div className={style.matches}>
         <DrawersTitle pageName="User Matches" />
-        <Typography align="center" variant="h3" style={{ marginTop: '20px' }}>
+        <Typography align="center" variant="h3" style={{ marginTop: "20px" }}>
           No Matches!
         </Typography>
       </div>
@@ -71,8 +74,8 @@ export const UserMatchesList = () => {
                   </div>
                 </>
               </ExpansionPanelSummary>
-              <ExpansionPanelDetails style={{ display: 'block' }}>
-                <div style={{ marginBottom: '15px' }}>
+              <ExpansionPanelDetails style={{ display: "block" }}>
+                <div style={{ marginBottom: "15px" }}>
                   <Typography align="left" variant="h5">
                     Entry description
                   </Typography>
@@ -122,7 +125,7 @@ export const UserMatchesList = () => {
                         </div>
                         <Typography
                           align="left"
-                          style={{ fontWeight: 'bold', marginTop: '10px' }}
+                          style={{ fontWeight: "bold", marginTop: "10px" }}
                         >
                           Reporter Email
                         </Typography>
@@ -134,21 +137,21 @@ export const UserMatchesList = () => {
                         </Typography>
                         <Typography
                           align="left"
-                          style={{ fontWeight: 'bold', marginTop: '10px' }}
+                          style={{ fontWeight: "bold", marginTop: "10px" }}
                         >
                           Match description
                         </Typography>
                         <Typography align="left">
                           {getEntryById(match.matchedWithEntryId)
                             ? getEntryById(match.matchedWithEntryId).description
-                            : 'No Description'}
+                            : "No Description"}
                         </Typography>
                         <Typography
                           align="left"
                           style={{
-                            fontWeight: 'bold',
-                            marginTop: '10px',
-                            marginBottom: '5px',
+                            fontWeight: "bold",
+                            marginTop: "10px",
+                            marginBottom: "5px",
                           }}
                         >
                           Match labels

@@ -1,21 +1,21 @@
-import React, { useState, useContext, createContext, useEffect } from 'react';
-import * as style from './Drawer.module.scss';
-import MDrawer from '@material-ui/core/Drawer';
-import { FilterList } from './FilterList';
-import { UserMatchesList } from './UserMatchesList';
-import { UserSettingsPanel } from './UserSettings';
+import React, { useState, useContext, createContext, useEffect } from "react";
+import * as style from "./Drawer.module.scss";
+import MDrawer from "@material-ui/core/Drawer";
+import { FilterList } from "./FilterList";
+import { UserMatchesList } from "./UserMatchesList";
+import { UserSettingsPanel } from "./UserSettings";
 
 export const drawers = {
-  FILTER: 'FILTER',
-  MATCH: 'MATCH',
-  MESSAGES: 'MESSAGES',
-  SETTINGS: 'SETTINGS',
+  FILTER: "FILTER",
+  MATCH: "MATCH",
+  MESSAGES: "MESSAGES",
+  SETTINGS: "SETTINGS",
 };
 
 export const DrawerContext = createContext({});
 
 export const DrawerProvider = ({ children }) => {
-  const [openDrawer, setOpenDrawer] = useState('');
+  const [openDrawer, setOpenDrawer] = useState("");
   const [badgeCount, setBadgeCounts] = useState({});
   const [filterState, setFilterState] = useState({});
   const incBadgeCount = (bId) => {
@@ -42,6 +42,7 @@ export const DrawerProvider = ({ children }) => {
         openDrawer,
         setOpenDrawer,
         incBadgeCount,
+        setBadgeCounts,
         decBadgeCount,
         badgeCount,
         filterState,
@@ -62,11 +63,11 @@ export const Drawer = ({ showAlert }) => {
   };
   return (
     <MDrawer
-      anchor={'left'}
+      anchor={"left"}
       open={!!openDrawer}
-      onClose={() => setOpenDrawer('')}
+      onClose={() => setOpenDrawer("")}
     >
-      {drawersMapping[openDrawer] ? drawersMapping[openDrawer]() : ''}
+      {drawersMapping[openDrawer] ? drawersMapping[openDrawer]() : ""}
     </MDrawer>
   );
 };

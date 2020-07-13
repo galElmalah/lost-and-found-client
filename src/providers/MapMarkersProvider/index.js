@@ -1,6 +1,6 @@
-import React, { createContext, useState, useEffect, useRef } from 'react';
-import { useApi } from '../../customHooks/useApi';
-import { tiles } from './markersConfig';
+import React, { createContext, useState, useEffect, useRef } from "react";
+import { useApi } from "../../customHooks/useApi";
+import { tiles } from "./markersConfig";
 
 export const MarkersContext = createContext();
 
@@ -10,7 +10,7 @@ export const MarkersProvider = ({ children }) => {
   const [draggableMarkerPosition, setDraggableMarker] = useState(null);
   const [center, setCenter] = useState(null);
   const { data: markers, setData: setMarkers, callApi: getMarkers } = useApi(
-    '/items',
+    "/items",
     {
       initialData: [],
     }
@@ -30,8 +30,8 @@ export const MarkersProvider = ({ children }) => {
     return () => clearInterval(id);
   }, [markers]);
 
-  const { callApi } = useApi('/items', {
-    method: 'post',
+  const { callApi } = useApi("/items", {
+    method: "post",
     invokeManually: true,
   });
   const refmarker = useRef();
@@ -69,6 +69,7 @@ export const MarkersProvider = ({ children }) => {
   const addMarker = (marker) => {
     return callApi({ item: marker }).then(({ data }) => {
       data && setMarkers((_markers) => [..._markers, data]);
+      return data;
     });
   };
 

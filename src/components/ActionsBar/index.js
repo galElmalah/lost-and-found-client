@@ -1,25 +1,27 @@
-import React, { useState, useContext } from 'react';
-import * as style from './ActionsBar.module.scss';
-import Button from '@material-ui/core/Button';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import Modal from '@material-ui/core/Modal';
-import Backdrop from '@material-ui/core/Backdrop';
-import { DatePicker } from '@material-ui/pickers';
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-import Fade from '@material-ui/core/Fade';
-import TextField from '@material-ui/core/TextField';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { MarkersContext } from '../../providers/MapMarkersProvider/index';
-import DateFnsUtils from '@date-io/date-fns';
-import { ColorPicker } from '../Utility';
-import ButtonStyle from '../ButtonStyle/ButtonStyle';
-import Grid from '@material-ui/core/Grid';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import InputLabel from '@material-ui/core/InputLabel';
-import { UserDetailsContext } from '../../providers/UserDetailsProvider';
+import React, { useState, useContext } from "react";
+import * as style from "./ActionsBar.module.scss";
+import Button from "@material-ui/core/Button";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
+import Modal from "@material-ui/core/Modal";
+import Backdrop from "@material-ui/core/Backdrop";
+import { DatePicker } from "@material-ui/pickers";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import Fade from "@material-ui/core/Fade";
+import TextField from "@material-ui/core/TextField";
+import Checkbox from "@material-ui/core/Checkbox";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import { MarkersContext } from "../../providers/MapMarkersProvider/index";
+import DateFnsUtils from "@date-io/date-fns";
+import { ColorPicker } from "../Utility";
+import ButtonStyle from "../ButtonStyle/ButtonStyle";
+import Grid from "@material-ui/core/Grid";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import ListSubheader from "@material-ui/core/ListSubheader";
+import InputLabel from "@material-ui/core/InputLabel";
+import { UserDetailsContext } from "../../providers/UserDetailsProvider";
+import { DrawerContext } from "../Drawer";
+import { matches } from "lodash";
 
 export const ActionsBar = ({ showAlert }) => {
   const [openModal, setOpenModal] = useState(null);
@@ -27,26 +29,26 @@ export const ActionsBar = ({ showAlert }) => {
     <div className={style.actionsBar}>
       <FoundModal
         showAlert={showAlert}
-        isOpen={openModal === 'found'}
+        isOpen={openModal === "found"}
         handleClose={() => setOpenModal(null)}
       />
       <LostModal
         showAlert={showAlert}
-        isOpen={openModal === 'lost'}
+        isOpen={openModal === "lost"}
         handleClose={() => setOpenModal(null)}
       />
 
-      <ButtonStyle text="found" clickHandler={() => setOpenModal('found')}>
-        {' '}
+      <ButtonStyle text="found" clickHandler={() => setOpenModal("found")}>
+        {" "}
       </ButtonStyle>
-      <ButtonStyle text="lost" clickHandler={() => setOpenModal('lost')}>
-        {' '}
+      <ButtonStyle text="lost" clickHandler={() => setOpenModal("lost")}>
+        {" "}
       </ButtonStyle>
     </div>
   );
 };
 
-export const TransitionsModal = ({ isOpen, handleClose, children = '' }) => {
+export const TransitionsModal = ({ isOpen, handleClose, children = "" }) => {
   return (
     <Modal
       aria-labelledby="transition-modal-title"
@@ -69,8 +71,8 @@ const FoundModal = ({ isOpen, handleClose, showAlert }) => (
   <TransitionsModal isOpen={isOpen} handleClose={handleClose}>
     <ItemForm
       showAlert={showAlert}
-      title={'Found Something'}
-      entryType={'found'}
+      title={"Found Something"}
+      entryType={"found"}
       handleClose={handleClose}
     />
   </TransitionsModal>
@@ -80,8 +82,8 @@ const LostModal = ({ isOpen, handleClose, showAlert }) => (
   <TransitionsModal isOpen={isOpen} handleClose={handleClose}>
     <ItemForm
       showAlert={showAlert}
-      title={'Lost Something'}
-      entryType={'lost'}
+      title={"Lost Something"}
+      entryType={"lost"}
       handleClose={handleClose}
     />
   </TransitionsModal>
@@ -99,11 +101,13 @@ const ItemForm = ({ entryType, handleClose, title, showAlert }) => {
   const [useCurrentLocation, setUseCurrentLocation] = useState(
     draggableMarkerPosition ? false : true
   );
-  const [name, setName] = React.useState('');
-  const [activeLabel, setActiveLabel] = React.useState('');
+  const { setBadgeCounts } = React.useContext(DrawerContext);
+
+  const [name, setName] = React.useState("");
+  const [activeLabel, setActiveLabel] = React.useState("");
   const [selectedDate, handleDateChange] = useState(new Date());
-  const [description, setDescription] = React.useState('');
-  const [color, setColor] = React.useState('');
+  const [description, setDescription] = React.useState("");
+  const [color, setColor] = React.useState("");
   const handleNameChange = (event) => {
     setName(event.target.value);
   };
@@ -115,8 +119,8 @@ const ItemForm = ({ entryType, handleClose, title, showAlert }) => {
   };
 
   const resetForm = () => {
-    setDescription('');
-    setName('');
+    setDescription("");
+    setName("");
     disableDraggableMarker();
   };
 
@@ -213,18 +217,30 @@ const ItemForm = ({ entryType, handleClose, title, showAlert }) => {
                       ],
                   lostOrFoundAt: selectedDate.toUTCString(),
                   color,
-                  labels: [activeLabel || 'other'],
+                  labels: [activeLabel || "other"],
+                }).then((data) => {
+                  const matchesAmount = data.matches.length;
+                  matchesAmount &&
+                    setBadgeCounts((p) => ({
+                      ...p,
+                      matches: p["matches"] || 0 + matchesAmount,
+                    }));
+                  showAlert({
+                    msg: `Entry created successfully!\n${
+                      matchesAmount
+                        ? `your entry has ${matchesAmount} possible matches`
+                        : ""
+                    }`,
+                    entryType: "success",
+                  });
                 });
-                showAlert({
-                  msg: 'Entry created successfully!',
-                  entryType: 'success',
-                });
+
                 resetForm();
                 handleClose();
               } else {
                 showAlert({
-                  msg: 'Description is mandatory field!',
-                  type: 'error',
+                  msg: "Description is mandatory field!",
+                  type: "error",
                 });
               }
             }}

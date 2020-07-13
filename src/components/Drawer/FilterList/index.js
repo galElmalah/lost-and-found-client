@@ -1,12 +1,12 @@
-import React from 'react';
-import { MarkersContext } from '../../../providers/MapMarkersProvider/index';
-import Axios from 'axios';
-import * as style from './FilterList.module.scss';
+import React from "react";
+import { MarkersContext } from "../../../providers/MapMarkersProvider/index";
+import Axios from "axios";
+import * as style from "./FilterList.module.scss";
 
-import throttle from 'lodash/throttle';
-import Divider from '@material-ui/core/Divider';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import throttle from "lodash/throttle";
+import Divider from "@material-ui/core/Divider";
+import ListSubheader from "@material-ui/core/ListSubheader";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 
 import {
   List,
@@ -16,27 +16,32 @@ import {
   Checkbox,
   Slider,
   TextField,
-} from '@material-ui/core';
-import { ColorPicker } from '../../Utility';
-import { UserDetailsContext } from '../../../providers/UserDetailsProvider/index';
-import { DrawerContext } from '..';
-import { DrawersTitle } from '../UserSettings';
+} from "@material-ui/core";
+import { ColorPicker } from "../../Utility";
+import { UserDetailsContext } from "../../../providers/UserDetailsProvider/index";
+import { DrawerContext } from "..";
+import { DrawersTitle } from "../UserSettings";
+
+const baseUrl =
+  process.env.NODE_ENV === "production"
+    ? `https://school-lost-and-found-app.herokuapp.com`
+    : `http://localhost:3001`;
 
 const toggleFilters = [
   {
-    value: 'LOSTS',
-    title: 'losts',
-    subtitle: 'show only losts entries',
+    value: "LOSTS",
+    title: "losts",
+    subtitle: "show only losts entries",
   },
   {
-    value: 'FOUNDS',
-    title: 'founds',
-    subtitle: 'show only founds entries',
+    value: "FOUNDS",
+    title: "founds",
+    subtitle: "show only founds entries",
   },
   {
-    value: 'USER_ENTRIES',
-    title: 'my entries',
-    subtitle: 'show only entries reported by me',
+    value: "USER_ENTRIES",
+    title: "my entries",
+    subtitle: "show only entries reported by me",
   },
 ];
 
@@ -60,13 +65,13 @@ export const FilterList = React.memo(
         filterState.toggels &&
         Object.keys(filterState.toggels) > Object.keys(toggels)
       ) {
-        decBadgeCount('filter');
+        decBadgeCount("filter");
       }
       if (
         filterState.toggels &&
         Object.keys(filterState.toggels) < Object.keys(toggels)
       ) {
-        incBadgeCount('filter');
+        incBadgeCount("filter");
       }
 
       setFilterState((p) => {
@@ -79,15 +84,15 @@ export const FilterList = React.memo(
         filterState.activeLabels.length > activeLabels.length &&
         activeLabels.length === 0
       ) {
-        decBadgeCount('filter');
+        decBadgeCount("filter");
       }
       if (
         filterState.activeLabels &&
         filterState.activeLabels.length < activeLabels.length &&
         activeLabels.length === 1
       ) {
-        console.log('shit');
-        incBadgeCount('filter');
+        console.log("shit");
+        incBadgeCount("filter");
       }
       setFilterState((p) => {
         return { ...p, activeLabels };
@@ -100,7 +105,7 @@ export const FilterList = React.memo(
     }, [range]);
     const ref = React.useRef(
       throttle((query) => {
-        Axios.get(`http://localhost:3001/items${query}`).then(({ data }) => {
+        Axios.get(`${baseUrl}/items${query}`).then(({ data }) => {
           setMarkers(data);
         });
       }, 300)
@@ -110,13 +115,13 @@ export const FilterList = React.memo(
       const toggelsQuery = Object.entries(toggels)
         .filter(([key, val]) => val)
         .map(([key, val]) => `${key.toLowerCase()}=${val}`)
-        .join('&');
+        .join("&");
       const labelsQuery = activeLabels.length
-        ? `labels=${activeLabels.join(',')}`
-        : '';
+        ? `labels=${activeLabels.join(",")}`
+        : "";
 
       return `?range=${range}&${toggelsQuery}${
-        labelsQuery ? `&${labelsQuery}` : ''
+        labelsQuery ? `&${labelsQuery}` : ""
       }`;
     };
 
@@ -127,7 +132,7 @@ export const FilterList = React.memo(
     return (
       <div className={style.filtersCon}>
         <DrawersTitle pageName="Filters" />
-        <List className={'slide-filter-bar'}>
+        <List className={"slide-filter-bar"}>
           <ListSubheader>Range Selector (radius in km)</ListSubheader>
 
           <ListItem>
@@ -154,7 +159,7 @@ export const FilterList = React.memo(
                     checked={toggels[value]}
                     disableRipple
                     onChange={() => {
-                      if (value === 'USER_ENTRIES') {
+                      if (value === "USER_ENTRIES") {
                         if (toggels[value]) {
                           setToggels((prevToggels) => ({
                             ...prevToggels,

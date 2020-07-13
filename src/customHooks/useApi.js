@@ -11,7 +11,7 @@ const defaultOptions = {
 const baseUrl =
   process.env.NODE_ENV === "production"
     ? `https://school-lost-and-found-app.herokuapp.com`
-    : `localhost:3001`;
+    : `http://localhost:3001`;
 
 const getEndpoint = (endpoint, method, userId) => {
   const url = baseUrl + endpoint;
