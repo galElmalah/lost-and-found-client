@@ -1,34 +1,36 @@
-import React, { useContext, useState, useEffect } from 'react';
-import * as style from './Drawer.module.scss';
-import { makeStyles } from '@material-ui/core/styles';
-import { MarkersContext } from '../../providers/MapMarkersProvider';
-import { UserDetailsContext } from '../../providers/UserDetailsProvider';
-import { Divider, Typography } from '@material-ui/core';
-import Avatar from '@material-ui/core/Avatar';
-import Tooltip from '@material-ui/core/Tooltip';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Collapse from '@material-ui/core/Collapse';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import ExploreIcon from '@material-ui/icons/Explore';
-import EditLocationIcon from '@material-ui/icons/EditLocation';
-import Fab from '@material-ui/core/Fab';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
-import { useApi } from '../../customHooks/useApi';
-import Chip from '@material-ui/core/Chip';
-import { EditItemModal } from '../ActionsBar/EditItem';
-import { tiles } from '../../providers/MapMarkersProvider/markersConfig';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { Labels } from './UserMatchesList';
+import React, { useContext, useState, useEffect } from "react";
+import * as style from "./Drawer.module.scss";
+import { makeStyles } from "@material-ui/core/styles";
+import { MarkersContext } from "../../providers/MapMarkersProvider";
+import { UserDetailsContext } from "../../providers/UserDetailsProvider";
+import { Divider, Typography } from "@material-ui/core";
+import Avatar from "@material-ui/core/Avatar";
+import Tooltip from "@material-ui/core/Tooltip";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import Collapse from "@material-ui/core/Collapse";
+import ExpandLess from "@material-ui/icons/ExpandLess";
+import ExpandMore from "@material-ui/icons/ExpandMore";
+import ExploreIcon from "@material-ui/icons/Explore";
+import EditLocationIcon from "@material-ui/icons/EditLocation";
+import Fab from "@material-ui/core/Fab";
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
+import { useApi } from "../../customHooks/useApi";
+import Chip from "@material-ui/core/Chip";
+import { EditItemModal } from "../ActionsBar/EditItem";
+import { tiles } from "../../providers/MapMarkersProvider/markersConfig";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import CloseIcon from "@material-ui/icons/Close";
+import { Labels } from "./UserMatchesList";
+import { DrawerContext } from ".";
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginRight: '10px',
+    marginRight: "10px",
   },
 }));
 
@@ -41,18 +43,18 @@ export const UserSettingsPanel = ({ showAlert }) => {
   const { userDetails } = useContext(UserDetailsContext);
   const [openPanels, setOpenPanels] = useState({});
   const [activeId, setActiveId] = useState({});
-  const { callApi } = useApi('', { method: 'delete', invokeManually: true });
+  const { callApi } = useApi("", { method: "delete", invokeManually: true });
 
   const getDescription = (t) => {
     const threshold = 45;
-    return t.length > threshold ? t.slice(0, threshold) + '...' : t;
+    return t.length > threshold ? t.slice(0, threshold) + "..." : t;
   };
   const handleDeleteClick = (id) => () => {
     callApi({}, `/items/${id}`).then(() => {
       refreshMarkers();
       showAlert({
         msg: `Successfully deleted ${id}`,
-        type: 'success',
+        type: "success",
       });
     });
   };
@@ -79,7 +81,7 @@ export const UserSettingsPanel = ({ showAlert }) => {
   console.log(tileUrl);
   return (
     <div>
-      <DrawersTitle pageName={'User settings'} />
+      <DrawersTitle pageName={"User settings"} />
       <div className={style.settingsPanel}>
         <div className={style.userDetails}>
           <Tooltip title={userDetails.name}>
@@ -93,15 +95,15 @@ export const UserSettingsPanel = ({ showAlert }) => {
 
         <Divider />
         <List>
-          <ListItem button onClick={togglePanel('map_settings')}>
+          <ListItem button onClick={togglePanel("map_settings")}>
             <ListItemIcon>
               <ExploreIcon />
             </ListItemIcon>
             <ListItemText primary="Map Settings" />
-            {isPanelOpen('map_settings') ? <ExpandLess /> : <ExpandMore />}
+            {isPanelOpen("map_settings") ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
           <Collapse
-            in={isPanelOpen('map_settings')}
+            in={isPanelOpen("map_settings")}
             timeout="auto"
             unmountOnExit
           >
@@ -119,19 +121,19 @@ export const UserSettingsPanel = ({ showAlert }) => {
               </ListItem>
             </List>
           </Collapse>
-          <ListItem button onClick={togglePanel('manage_entries_settings')}>
+          <ListItem button onClick={togglePanel("manage_entries_settings")}>
             <ListItemIcon>
               <EditLocationIcon />
             </ListItemIcon>
             <ListItemText primary="Manage User Entries" />
-            {isPanelOpen('manage_entries_settings') ? (
+            {isPanelOpen("manage_entries_settings") ? (
               <ExpandLess />
             ) : (
               <ExpandMore />
             )}
           </ListItem>
           <Collapse
-            in={isPanelOpen('manage_entries_settings')}
+            in={isPanelOpen("manage_entries_settings")}
             timeout="auto"
             unmountOnExit
           >
@@ -175,19 +177,28 @@ export const UserSettingsPanel = ({ showAlert }) => {
     </div>
   );
 };
-export const LostOrFoundLabel = ({ type = '' }) => {
+export const LostOrFoundLabel = ({ type = "" }) => {
   return (
     <Chip
-      className={`${style.chip} ${type === 'found' ? style.found : ''}`}
+      className={`${style.chip} ${type === "found" ? style.found : ""}`}
       label={type.toUpperCase()}
-      color={type === 'found' ? 'primary' : 'secondary'}
+      color={type === "found" ? "primary" : "secondary"}
     />
   );
 };
 
-export const DrawersTitle = ({ pageName = '' }) => (
-  <div className={style.title}>
-    <Typography variant="h5">LOST AND SPOTTINGS</Typography>
-    <Typography style={{ fontWeight: 'bold' }}>{pageName}</Typography>
-  </div>
-);
+export const DrawersTitle = ({ pageName = "" }) => {
+  const { setOpenDrawer } = useContext(DrawerContext);
+  return (
+    <div className={style.title}>
+      <CloseIcon
+        className={style.close}
+        onClick={() => {
+          setOpenDrawer(null);
+        }}
+      />
+      <Typography variant="h5">LOST AND SPOTTINGS</Typography>
+      <Typography style={{ fontWeight: "bold" }}>{pageName}</Typography>
+    </div>
+  );
+};
